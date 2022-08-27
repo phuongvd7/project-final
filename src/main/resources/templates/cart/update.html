@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html layout:decorator="home.html">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Update Cart</title>
+</head>
+<body>
+	<div layout:fragment="content" class="col-12 col-sm-9">
+		<div class="row">
+			<h6>Update category</h6>
+		</div>
+		<hr />
+		<div class="row">
+			<form th:action="@{/update-gio-hang}" method="post">
+				<div class="mb-3">
+					<label class="form-label">ID sản phẩm:</label> 
+					<input readonly="readonly" th:value="${order.product.id}" type="text" name="id" class="form-control">
+				</div>
+				<div class="mb-3">
+					<label class="form-label">Tên sản phẩm:</label> 
+					<input readonly="readonly" th:value="${order.product.name}" type="text" name="name" class="form-control">
+				</div>
+				<div class="mb-3">
+					<label class="form-label">Quantity:</label> 
+					<input th:value="${order.quantity}" type="text" name="quantity" class="form-control">
+				</div>
+				<div class="mb-3">
+					<button class="btn btn-primary" type="submit">Save</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

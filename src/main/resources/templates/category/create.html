@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html layout:decorator="home.html">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Create Category</title>
+</head>
+<body>
+	<div layout:fragment="content" class="col-12 col-sm-9">
+		<div class="row">
+			<h6>Create Category</h6>
+		</div>
+		<hr />
+		<div class="row">
+	<!--  		<form th:action="@{/category/create}" method="post">
+				<div class="mb-3">
+					<label class="form-label">Category name:</label> <input type="text"
+						name="name" class="form-control">
+				</div>
+				<div class="mb-3">
+					<button class="btn btn-primary" type="submit">Create</button>
+				</div>
+			</form> -->
+			<h6 th:text="#{category.create}"></h6>
+			<form enctype="multipart/form-data" th:object="${category}" th:action="@{/category/create}" method="post">
+				<div class="mb-3">
+					<label class="form-label" th:text="#{category.name}"></label> 
+					<input type="text" th:field="*{name}" class="form-control">
+					<p th:errors="*{name}"></p>
+					<!--  *{} tro toi th:object = "${category}" -->
+					<input type = "file" name = "file" accept = "image/*" class = "form-control">
+				</div>
+				<div class="mb-3">
+					<button class="btn btn-primary" type="submit">Save</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

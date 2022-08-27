@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html layout:decorator="home.html">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>List</title>
+
+</head>
+<body>
+	<div layout:fragment="content" class="col-12 col-sm-9">
+		<div class="row">
+			<h6>Your Cart</h6>
+		</div>
+		<hr />
+		<div class="row">
+
+				<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>Ten sp</th>
+						<th>So luong</th>
+						<th>Don gia</th>
+						<th>Thanh tien</th>
+						<th>Tuy chon</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="order : ${order.billTerms}">
+					 	<td th:text="${order.product.name}"></td>
+						<td th:text="${order.quantity}"></td> 
+						<td th:text="${#numbers.formatDecimal(order.product.price, 2, 0,'COMMA')}"></td>
+						<td th:text="${#numbers.formatDecimal(order.price, 2, 0,'COMMA')}"></td>
+						
+						<td><a class="text-danger" th:href="@{'/xoa-gio-hang/' + ${order.product.id}}">Xoa khoi Cart</a>
+						<a  th:href="@{'/update-gio-hang/' + ${order.product.id}}">Update So luong</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div> 
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>Tổng thanh toán</th>
+						<th>Option</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="order : ${order}">
+					 <td th:text="${#numbers.formatDecimal(order.total, 2, 0,'COMMA')}"></td>
+					 <td><a class="text-danger" th:href="@{/bill/create}">Nhap Bill</a>
+					 <a class="text-success" th:href="@{/billterms/create}">Nhap Bill Items</a></td>
+					 </tr>
+				</tbody>
+			</table>
+			</div>
+			
+			<!-- <form th:action="@{/thanh-toan}" method="post">
+				
+				<div class="mb-3">
+					<button class="btn btn-primary" type="submit">Thanh toan</button>
+				</div>
+			</form> -->
+			
+			
+			
+		</div>
+	</div>
+</body>
+</html>

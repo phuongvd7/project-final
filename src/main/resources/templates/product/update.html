@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html layout:decorator="home.html">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Update product</title>
+</head>
+<body>
+	<div layout:fragment="content" class="col-12 col-sm-9">
+		<div class="row">
+			<h6>Update product</h6>
+		</div>
+		<hr />
+		<div class="row">
+			<form th:action="@{/product/update}" method="post">
+				<div class="mb-3">
+					<label class="form-label">Product Id:</label> 
+					<input readonly="readonly" th:value="${product.id}" type="number" name="id" class="form-control">
+				</div>
+				<div class="mb-3">
+					<label class="form-label">Product Name:</label> 
+					<input th:each="listProduct : ${listProduct}"  th:value="${listProduct.name}" type="text" name="name" class="form-control">
+				</div>
+				<select class="form-select form-select-sm"
+					aria-label=".form-select-sm example" name="category">
+					<option selected>Chọn khách hàng:</option>
+					<option th:each="cate : ${listCategory}"
+						th:value="${cate.id}" th:text="${cate.name}" th:selected="${cate.id == listProduct.category.id}"></option>
+				</select> 
+				
+				<div class="mb-3">
+					<label class="form-label">Price:</label> 
+					<input  	type="number" name="price" class="form-control" th:value="${listProduct.price}">
+						
+				</div>
+				<div class="mb-3">
+					<button class="btn btn-primary" type="submit">Save</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html layout:decorator="home.html">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Create Product</title>
+</head>
+<body>
+	<div layout:fragment="content" class="col-12 col-sm-9">
+		<div class="row">
+			<h6>Create Product</h6>
+		</div>
+		<hr />
+		<div class="row">
+			<form th:action="@{/product/create}" method="post">			
+				<div class="mb-3">
+					<label class="form-label">Product name:</label> <input type="text"
+						name="name" class="form-control">
+				</div>
+				
+				<div class="mb-3">
+					<label class="form-label">Price:</label> <input type="number"
+						name="price" class="form-control">
+				</div>
+				<div class="mb-3">
+					<label class="form-label">description:</label> <input type="text"
+						name="description" class="form-control">
+				</div>			
+				<select class="form-select form-select-sm"
+					aria-label=".form-select-sm example" name="category">
+					<option selected>Select Category:</option>
+					<option th:each="category : ${listCategory}"
+						th:value="${category.id}" th:text="${category.name}"></option>
+				</select> 
+
+				<div class="mb-3">
+					<button class="btn btn-primary" type="submit">Create</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

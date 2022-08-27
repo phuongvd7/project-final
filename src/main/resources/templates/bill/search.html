@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html layout:decorator="home.html"> <!--  extend lai file home --> 
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Search Bill</title>
+</head>
+<body>
+  <div layout:fragment="content" class="col-12 col-sm-9">	
+		<div class="row">
+			<form th:action="@{/bill/search}" method="get">
+				<div class="row">
+				<!--  	<div class="col-12 col-md-4">
+						<input type="text" class="form-control" name="name"
+							placeholder="Tìm kiếm theo ten:...">
+					</div> -->
+				<!-- 	<div class="col-12 col-md-4">
+						<input type="text" class="form-control" name="id"
+							placeholder="Tìm kiếm theo bill id:...">
+					</div> -->
+									
+					<!-- <div class="col-12 col-md-2">
+					<div class="row">
+							<label class="col">User:</label> 
+							<select class="form-select col" name="userId">
+								<option value="">Chọn</option>
+								<option th:each="user : ${user}"
+									th:value="${user.id}" th:text="${user.username}"></option>
+							</select>
+						</div>
+					</div>  -->
+					
+					
+					<div class="col-12 col-md-2">
+						<div class="row">
+							<label class="col">User:</label> 
+							<select name="userID" class="form-select col">
+								<option value="">Chọn</option>
+								<option th:each="u : ${user}" th:value="${u.id}" th:text="${u.name + ' - ' + u.username}" th:selected="${u.id == userID}"></option>
+							</select>
+						</div>
+					</div>
+					
+					<div class="col-12 col-md-3">
+						<div class="row">
+							<label class="col">From:</label> 
+							<input th:value="${fromDate}" type = "date" name="fromDate" class="form-control col" placeholder="dd/MM/yyyy">
+						</div>
+					</div>
+					
+					<div class="col-12 col-md-3">
+						<div class="row">
+							<label class="col">To:</label> 
+							<input th:value="${toDate}" type="date" name="toDate" class="form-control col" placeholder="dd/MM/yyyy">
+						</div>
+					</div>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					<div class="col-12 col-md-2">
+						<button type="submit" class="btn btn-primary">Search</button>
+					</div>
+					<div class="col-12 col-md-2">
+						<a th:href="@{/bill/create}" class="btn btn-secondary">Add</a>
+					</div>
+				</div>
+			</form>
+		</div>
+		<hr />
+		<div class="row">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>bill id</th>
+						<th>Buy Date</th>
+						<th>User Name</th>
+						<th>Coupon cua khach hang</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="bill : ${list}">
+						<td th:text="${bill.id}"></td>
+						<td th:text="${#dates.format(bill.buyDate, 'dd-MM-yyyy')}"></td>
+		 				<td th:text="${bill.user.username}"></td>
+		 				<td th:text="${bill.couponCode}"></td>
+						<td><a class="text-danger" 
+							th:href="@{'/bill/delete?id=' + ${bill.id}}">Delete</a>
+							<a th:href="@{'/bill/update?id=' + ${bill.id}}">Update</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<ul class="pagination">
+ 
+ 					<li th:if="${totalPage > 0}" class="page-item">
+						<a class="page-link" th:href="@{'/bill/search?page='+ ${page - 1 < 0 ? 0 : (page - 1)} + '&userID=' + ${userID} + '&fromDate=' + ${fromDate} + '&toDate=' + ${toDate}}">Previous</a>
+					</li>
+	
+					<li th:if="${totalPage > 0}" th:each="i: ${#numbers.sequence(0, totalPage - 1)}" class="page-item">
+						<a class="page-link" th:href="@{'/bill/search?page='+ ${i} + '&userID=' + ${userID} + '&fromDate=' + ${fromDate} + '&toDate=' + ${toDate}}" th:text="${i}"></a>
+					</li>
+	
+					<li th:if="${totalPage > 0}" class="page-item">
+						<a class="page-link" th:href="@{'/bill/search?page='+ ${page + 1 >= totalPage ? (totalPage - 1) : (page + 1) } + '&userID=' + ${userID} + '&fromDate=' + ${fromDate} + '&toDate=' + ${toDate}}">Next</a>
+					</li>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 				<!-- <li class="page-item"><a class="page-link" 
+				th:href="@{'/bill/search?page='+ ${page - 1 < 0 ? 0 : (page - 1)} + '&id=' + ${id}}">Previous</a></li>
+
+				<li th:if="${totalPage > 0}" th:each="i: ${#numbers.sequence(0, totalPage - 1)}"
+					class="page-item"><a class="page-link"
+					th:href="@{'/bill/search?page='+ ${i} + '&id=' + ${id} }" th:text="${i}"></a></li>
+
+				<li class="page-item"><a class="page-link"
+						th:href="@{'/bill/search?page='+ ${page + 1 >= totalPage ? (totalPage - 1) : (page + 1) } + '&id=' + ${id}}">Next</a></li>  -->
+	<!--  		<li class="page-item" th:if="${totalPage > 0}"	><a class="page-link"
+					th:href="@{'/customer/search?page='+ ${page - 1 < 0 ? 0 : (page - 1)}}">Previous</a></li>
+
+				<li th:if="${totalPage > 0}"
+					th:each="i: ${#numbers.sequence(0, totalPage - 1)}"
+					class="page-item"><a class="page-link"
+					th:href="@{'/customer/search?page='+ ${i}}" th:text="${i}"></a></li>
+
+				<li class="page-item" th:if="${totalPage > 0}"><a class="page-link"
+					th:href="@{'/customer/search?page='+ ${page + 1 >= totalPage ? (totalPage - 1) : (page + 1) }}">Next</a></li>-->	
+			</ul>
+		</div>
+	</div>
+</body>
+</html>

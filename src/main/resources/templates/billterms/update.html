@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html layout:decorator="home.html">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Update List</title>
+</head>
+<body>
+	<div layout:fragment="content" class="col-12 col-sm-9">
+		<div class="row">
+			<h6>Update List</h6>
+		</div>
+		<hr />
+		<div class="row">
+			<form th:action="@{/billterms/update}" method="post">
+				<div class="mb-3">
+					<label class="form-label">Mã hóa đơn:</label> 
+					<input type="number"  th:each="billterms : ${billTerms}" 
+						name="id" class="form-control" th:value="${billterms.bill.id}" readonly>
+			 	</div> 
+				<div class="mb-3">
+					<label class="form-label">Số lượng:</label> 
+					<input type="number" th:each="billterms : ${billTerms}"
+						name="quantity" class="form-control" th:value="${billterms.quantity}">
+				</div>
+				<select class="form-select form-select-sm"
+					aria-label=".form-select-sm example" name="bill">
+					<option selected>Chọn bill:</option>
+					<option th:each="bill : ${listBill}"
+						th:value="${bill.id}" th:text="${bill.user.name}" th:selected="${bill.id == billTerms.bill.id}"></option>
+				</select> 
+				<br /> 
+				<select class="form-select form-select-sm" aria-label=".form-select-sm example" name="product">
+					<option selected>Chọn mặt hàng:</option>
+					<option th:each="product : ${listProduct}" th:value="${product.id}"
+						th:text="${product.name}" th:selected="${product.id == billTerms.product.id}"></option>
+				</select> 
+				<br />
+				<div class="mb-3">
+					<button class="btn btn-primary" type="submit">Tạo</button>
+				</div>
+
+			</form>
+		</div>
+	</div>
+</body>
+</html>

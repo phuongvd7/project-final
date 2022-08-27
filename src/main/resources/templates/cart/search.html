@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html layout:decorator="home.html">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Cart</title>
+
+</head>
+<body>
+	<div layout:fragment="content" class="col-12 col-sm-9">
+		<hr />
+		<div class="dropdown">
+			<button type="button" class="btn btn-primary dropdown-toggle"
+				data-bs-toggle="dropdown">Sắp xếp theo</button>
+			<ul class="dropdown-menu">
+				<li><a class="dropdown-item" th:href="@{/cart/search?sort=1}">Theo tên san pham</a></li>
+				<li><a class="dropdown-item" th:href="@{/billterms/search?sort=2}">Theo Id hoa don</a></li>
+			</ul>
+		</div>
+		<br/>
+		<div class="row">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>ID BILL</th>
+						<th>Số lượng</th>
+						<th>Giá (vnđ)</th>
+						<th>Khách hàng</th>
+						<th>Tên mặt hàng</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="cart : ${cart}">
+						<td th:text="${cart.billterms.bill.id}"></td>
+						<td th:text="${billterms.quantity}"></td>
+						<td th:text="${#numbers.formatDecimal(billterms.price, 2, 0,'COMMA')}"></td>
+						<td th:text="${billterms.bill.user.username}"></td>
+						<td th:text="${billterms.product.name}"></td>
+						<td><a class="text-danger" th:href="@{'/billterms/delete?id=' + ${billterms.id}}">Delete</a>
+							<a th:href="@{'/billterms/update?id=' + ${billterms.id}}">Update</a>
+							<a th:href="@{'/billterms/update?id=' + ${billterms.id}}">Add to Cart</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			 <ul class="pagination">
+				<li class="page-item" th:if="${totalPage > 0}"><a class="page-link"
+					th:href="@{'/billterms/search?page='+ ${page - 1 < 0 ? 0 : (page - 1)} + '&name=' + ${name} + '&id=' + ${id} + '&billId=' + ${billId} +'&sort=' + ${sort} }">Previous</a></li>
+
+				<li th:if="${totalPage > 0}"
+					th:each="i: ${#numbers.sequence(0, totalPage - 1)}"
+					class="page-item"><a class="page-link"
+					th:href="@{'/billterms/search?page='+ ${i}  + '&name=' + ${name} + '&id=' + ${id} + '&billId=' + ${billId} +'&sort=' + ${sort} }" th:text="${i}"></a></li>
+
+				<li class="page-item" th:if="${totalPage > 0}"><a class="page-link"
+					th:href="@{'/billterms/search?page='+ ${page + 1 >= totalPage ? (totalPage - 1) : (page + 1) }  + '&name=' + ${name} + '&id=' + ${id} +'&billId=' + ${billId} +'&sort=' + ${sort} }">Next</a></li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html layout:decorator="home.html">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Create Coupon</title>
+
+</head>
+<body>
+	<div layout:fragment="content" class="col-12 col-sm-9">
+		<div class="row">
+			<h6>Create Coupon</h6>
+		</div>
+		<hr />
+		<div class="row">
+		<!--	 			<form th:action="@{/coupon/create}" method="post">
+	  			<div class="mb-3">
+					<label class="form-label">Customer ID:</label> 
+					<textarea type="text" name="customer_id" class="form-control" ></textarea>
+				</div>  -->
+		<!--  		<div class="mb-3">
+					<label class="form-label">Buy Date:</label> 
+				 <input name="buyDate" placeholder="dd/MM/yyyy" class="form-control">
+				</div> -->
+	<!--  			<div class="mb-3">
+					<label class="form-label">Customer phone number</label> 
+					<input type="number" name="sdt" class="form-control" ></input>
+				</div>-->
+								
+
+
+
+			 <h6 th:text="#{coupon.create}"></h6>
+			<form th:object="${coupon}" th:action="@{/coupon/create}" method="post">
+				<div class="mb-3">
+					<label class="form-label">expired Date:</label> <br> 
+					<input type="text"  name="expired_Date" placeholder="dd-MM-yyyy" class="form-control">
+				</div>
+				<div class="mb-3">
+					<label class="form-label">coupon code:</label> <br> 
+					<input type="text" name="couponCode" placeholder="coupon_Code" class="form-control">
+				</div>
+				<div class="mb-3">
+					<label class="form-label">discountAmount:</label> <br> 
+					<input type="number" name="discountAmount" placeholder="discountAmount" class="form-control"> 
+		<!-- 		<select class="form-select form-select-sm"
+					aria-label=".form-select-sm example" name="user">
+					<option selected>Select User:</option>
+					<option th:each="user : ${listUser}"
+						th:value="${user.id}" th:text="${user.username}"></option> 
+			
+				</select> -->
+				</div>
+				<div class="mb-3">
+					<button class="btn btn-primary" type="submit">Save</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

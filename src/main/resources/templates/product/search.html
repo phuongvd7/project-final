@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html layout:decorator="home.html">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Search Product</title>
+
+</head>
+<body>
+	<div layout:fragment="content" class="col-12 col-sm-9">
+		<div class="row">
+			<form th:action="@{/product/search}" method="get">
+				<div class="row">
+					<div class="col-12 col-md-3">
+						<input type="text" class="form-control" name="name"
+							placeholder="Tìm kiếm theo tên: ...">
+					</div>
+					<div class="col-12 col-md-3">
+						<input type="text" class="form-control" name="id"
+							placeholder="Tìm kiếm theo Id:...">
+					</div>
+					
+					<div class="col-12 col-md-3">
+							<label class="col">Danh muc:</label> 
+							<select class="form-select col" name="categoryId">
+								<option value="">Chọn danh muc</option>
+								<option th:each="cate : ${category}" th:value="${cate.id}" th:text="${cate.name}"></option>
+							</select>
+						</div>
+					<div class="col-12 col-md-1">
+						<button type="submit" class="btn btn-primary">Search</button>
+					</div>
+					<div class="col-12 col-md-1">
+						<a th:href="@{/product/create}" class="btn btn-secondary">Add</a>
+					</div>
+				</div>
+			</form>
+		</div>
+		<hr />
+		<div class="row">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>Mã hàng</th>
+						<th>Tên hàng</th>
+						<th>Nhóm hàng</th>
+						<th>Gía bán (vnđ)</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="product : ${list}">
+						<td th:text="${product.id}"></td>
+						<td th:text="${product.name}"></td>
+						<td th:text="${product.category.name}"></td>
+						<td th:text="${#numbers.formatDecimal(product.price, 2, 0,'COMMA')}"></td>
+						<td><a class="text-danger" th:href="@{'/product/delete?id=' + ${product.id}}">Delete</a> 
+							<a th:href="@{'/product/update?id=' + ${product.id}}">Update</a>
+							<a th:href="@{'/add-to-cart/' + ${product.id}}">Add to Cart</a>
+						</td>
+							
+					</tr>
+				</tbody>
+			</table>
+		<!--  	 <ul class="pagination">
+				<li class="page-item" th:if="${totalPage > 0}"	><a class="page-link"
+					th:href="@{'/product/search?page='+ ${page - 1 < 0 ? 0 : (page - 1)}}">Previous</a></li>
+
+				<li th:if="${totalPage > 0}"
+					th:each="i: ${#numbers.sequence(0, totalPage - 1)}"
+					class="page-item"><a class="page-link"
+					th:href="@{'/product/search?page='+ ${i}}" th:text="${i}"></a></li>
+
+				<li class="page-item" th:if="${totalPage > 0}"><a class="page-link"
+					th:href="@{'/product/search?page='+ ${page + 1 >= totalPage ? (totalPage - 1) : (page + 1) }}">Next</a></li>
+-->
+<ul class="pagination">
+ 				<li class="page-item"><a class="page-link" 
+				th:href="@{'/product/search?page='+ ${page - 1 < 0 ? 0 : (page - 1)} + '&name=' + ${name}}">Previous</a></li>
+
+				<li th:if="${totalPage > 0}" th:each="i: ${#numbers.sequence(0, totalPage - 1)}"
+					class="page-item"><a class="page-link"
+					th:href="@{'/product/search?page='+ ${i} + '&name=' + ${name} }" th:text="${i}"></a></li>
+
+				<li class="page-item"><a class="page-link"
+						th:href="@{'/product/search?page='+ ${page + 1 >= totalPage ? (totalPage - 1) : (page + 1) } + '&name=' + ${name}}">Next</a></li> 
+			</ul> 
+		</div>
+	</div>
+</body>
+</html>

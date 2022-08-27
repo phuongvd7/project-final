@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html layout:decorator="home.html">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bảng danh sách mua hàng </title>
+</head>
+<body>
+	<div layout:fragment="content" class="col-12 col-sm-9">
+		<div class="row">
+			<h6>Bảng danh sách mua hàng</h6>
+		</div>
+		<hr />
+		<div class="row">
+			<form th:action="@{/billterms/create}" method="post">
+				<div class="mb-3">
+				<label class="form-label">Quantity:</label> 
+				<input type="number" name="quantity" class="form-control">
+				</div>
+				<!--  <div class="mb-3">
+					<label class="form-label">Buy Price:</label> 
+					<input type="number"
+						name="price" class="form-control">
+				</div> -->
+				<select class="form-select form-select-sm" aria-label=".form-select-sm example" name="bill">
+					<option selected>Select Bill:</option>
+					<option th:each="bill : ${listBill}" th:value="${bill.id}" th:text="${bill.user.name}" ></option>
+				</select> <br /> 
+				<select class="form-select form-select-sm" aria-label=".form-select-sm example" name="product">
+					<option selected>Select Product:</option>
+					<option th:each="product : ${listProduct}" th:value="${product.id}"
+						th:text="${product.name}"></option>
+				</select> <br />
+				<div class="mb-3">
+					<button class="btn btn-primary" type="submit">Tạo</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

@@ -36,8 +36,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 				//.antMatchers("/user/**", "/bill/**") // bat dau bang duong dan , antMatchers
-				.antMatchers("/user/**")
-				.hasAnyRole("ADMIN", "SUBADMIN")
+				.antMatchers("/bill/**")
+				.hasAnyRole("ADMIN", "SUBADMIN", "MEMBER")
 				.anyRequest().permitAll().and().csrf().disable()
 				.formLogin()
 				.loginPage("/dang-nhap").loginProcessingUrl("/login")

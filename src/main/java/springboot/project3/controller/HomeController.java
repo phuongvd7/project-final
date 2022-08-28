@@ -14,7 +14,7 @@ public class HomeController {
 	MailService mailService;
 	@GetMapping("/home")
 	public String home() {
-		mailService.sendEmail("ducphuong170498@gmail.com", "test test", "test test");
+	//	mailService.sendEmail("ducphuong170498@gmail.com", "test test", "test test");
 		System.out.println("testmail");
 		return "home.html";
 	}

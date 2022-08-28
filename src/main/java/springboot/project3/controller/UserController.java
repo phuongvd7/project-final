@@ -2,6 +2,7 @@ package springboot.project3.controller;
 
 import java.util.Arrays;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,17 +16,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import spring.project3.model.MessageDTO;
+import spring.project3.model.UserDTO;
 import springboot.project3.RandomPassword;
 import springboot.project3.entity.User;
 import springboot.project3.repository.UserRepo;
 import springboot.project3.service.MailService;
+import springboot.project3.service.UserService;
 
 
 @Controller
@@ -38,6 +44,27 @@ public class UserController {
 	@Autowired
 	RandomPassword random;
 	
+	@Autowired
+	UserService userService;
+	@GetMapping("/registration")
+	public String showRegistrationForm(WebRequest request, Model model) {
+	    UserDTO userDto = new UserDTO();
+	    model.addAttribute("user", userDto);
+	    return "user/registration";
+	}
+	@PostMapping("/registration")
+	public String registerUserAccount(
+	  @ModelAttribute("user") @Valid UserDTO userDto, 
+	  HttpServletRequest request, Errors errors) { 
+	    
+	    try {
+	        User registered = userService.registerNewUserAccount(userDto);
+	    } catch (Exception e) {
+	    	e.printStackTrace();
+	    }
+
+	    return  "user/successRegister";
+	}
 	@GetMapping("/create")
 	public String create(Model model) {
 		model.addAttribute("user", new User());
